@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pack Calculator</title>
+    <link rel="stylesheet" href="/static/css/styles.css" />
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+    <script src="https://unpkg.com/htmx-ext-form-json"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>
+          <div class="target-icon"></div>
+          Pack Calculator
+        </h1>
+      </div>
+
+      <form
+        hx-post="/api/v1/calculate"
+        hx-target="#results"
+        hx-indicator="#loading"
+        hx-ext="form-json"
+      >
+        <div class="section">
+          <div class="section-title">Pack Sizes Configuration:</div>
+
+          <div class="preset-buttons">
+            <button
+              type="button"
+              class="preset-btn"
+              onclick="setPreset([250, 500, 1000, 2000, 5000])"
+            >
+              Standard Packs
+            </button>
+            <button
+              type="button"
+              class="preset-btn"
+              onclick="setPreset([23, 31, 53])"
+            >
+              Edge Case Test
+            </button>
+            <button
+              type="button"
+              class="preset-btn"
+              onclick="setPreset([100, 250, 500])"
+            >
+              Small Packs
+            </button>
+          </div>
+
+          <div class="pack-sizes-container" id="pack-sizes">
+            <div class="pack-size-row">
+              <input
+                type="number"
+                name="pack_sizes"
+                class="pack-size-input"
+                value="250"
+                min="1"
+                required
+              />
+              <button
+                type="button"
+                class="remove-btn"
+                onclick="removePackSize(this)"
+                disabled
+              >
+                Remove
+              </button>
+            </div>
+            <div class="pack-size-row">
+              <input
+                type="number"
+                name="pack_sizes"
+                class="pack-size-input"
+                value="500"
+                min="1"
+                required
+              />
+              <button
+                type="button"
+                class="remove-btn"
+                onclick="removePackSize(this)"
+              >
+                Remove
+              </button>
+            </div>
+            <div class="pack-size-row">
+              <input
+                type="number"
+                name="pack_sizes"
+                class="pack-size-input"
+                value="1000"
+                min="1"
+                required
+              />
+              <button
+                type="button"
+                class="remove-btn"
+                onclick="removePackSize(this)"
+              >
+                Remove
+              </button>
+            </div>
+            <div class="pack-size-row">
+              <input
+                type="number"
+                name="pack_sizes"
+                class="pack-size-input"
+                value="2000"
+                min="1"
+                required
+              />
+              <button
+                type="button"
+                class="remove-btn"
+                onclick="removePackSize(this)"
+              >
+                Remove
+              </button>
+            </div>
+            <div class="pack-size-row">
+              <input
+                type="number"
+                name="pack_sizes"
+                class="pack-size-input"
+                value="5000"
+                min="1"
+                required
+              />
+              <button
+                type="button"
+                class="remove-btn"
+                onclick="removePackSize(this)"
+              >
+                Remove
+              </button>
+            </div>
+          </div>
+
+          <button type="button" class="add-btn" onclick="addPackSize()">
+            + Add Pack Size
+          </button>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Order Quantity:</div>
+          <input
+            type="number"
+            name="order_quantity"
+            class="order-input"
+            value="263"
+            min="1"
+            required
+          />
+        </div>
+
+        <button type="submit" class="calculate-btn">
+          Calculate Optimal Packs
+        </button>
+
+        <div id="loading" class="loading htmx-indicator">
+          ⏳ Calculating optimal pack distribution...
+        </div>
+      </form>
+
+      <div id="results"></div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+  </body>
+</html>
